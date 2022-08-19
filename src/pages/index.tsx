@@ -1,8 +1,17 @@
-import { Button, Center, Heading, Input, Textarea } from "@chakra-ui/react";
+import {
+  Button,
+  Center,
+  Flex,
+  Heading,
+  Input,
+  Spacer,
+  Textarea,
+} from "@chakra-ui/react";
 import type { NextPage } from "next";
 import { useAuth } from "@/hooks/use-auth";
 import { useStorage } from "@/hooks/use-storage";
 import { useState } from "react";
+import Upload from "components/Upload";
 
 const Home: NextPage = () => {
   const { authenticate, logout, userData } = useAuth();
@@ -13,8 +22,8 @@ const Home: NextPage = () => {
   console.log(userData);
 
   return (
-    <Center>
-      <Heading>Vaultacks</Heading>
+    <Center mt={8} as={Flex} flexDir="column">
+      <Heading mr={8}>Vaultacks</Heading>
       {userData ? (
         <Button onClick={logout}>Sign Out</Button>
       ) : (
@@ -35,7 +44,7 @@ const Home: NextPage = () => {
           )
         }
       >
-        Save decrypted file
+        Save public file
       </Button>
 
       <Button
@@ -61,6 +70,10 @@ const Home: NextPage = () => {
         />{" "}
         <Button type="submit">Get File</Button>
       </form>
+
+      <Spacer my={8} />
+
+      <Upload />
     </Center>
   );
 };
