@@ -14,7 +14,6 @@ function MyApp({ Component, pageProps }: AppProps) {
         setUserData(userData);
       });
     } else if (userSession.isUserSignedIn()) {
-      // setLoggedIn(true);
       setUserData(userSession.loadUserData());
     }
   }, [userSession, setUserData]);

@@ -1034,6 +1034,19 @@
     jsontokens "^3.1.1"
     query-string "^6.13.1"
 
+"@stacks/auth@^4.3.4":
+  version "4.3.4"
+  resolved "https://registry.yarnpkg.com/@stacks/auth/-/auth-4.3.4.tgz#07395aba034cb6a523e4287a7afcbad32eb3d49f"
+  integrity sha512-oUOSOboA+fJNwOh7Jkjrm3BZbxGO77p1sJweDkEGEuhedijJsu8rY8d/hR1mxSZpUTpgsZjoyPGzk6KFdjFq3Q==
+  dependencies:
+    "@stacks/common" "^4.3.4"
+    "@stacks/encryption" "^4.3.4"
+    "@stacks/network" "^4.3.4"
+    "@stacks/profile" "^4.3.4"
+    cross-fetch "^3.1.5"
+    jsontokens "^3.1.1"
+    query-string "^6.13.1"
+
 "@stacks/common@^4.3.2", "@stacks/common@^4.3.4":
   version "4.3.4"
   resolved "https://registry.yarnpkg.com/@stacks/common/-/common-4.3.4.tgz#8cde469bad561a67d7a6efa5de34a8b08cfbe81b"
@@ -1066,7 +1079,7 @@
     readable-stream "^3.6.0"
     url "^0.11.0"
 
-"@stacks/encryption@^4.3.2":
+"@stacks/encryption@^4.3.2", "@stacks/encryption@^4.3.4":
   version "4.3.4"
   resolved "https://registry.yarnpkg.com/@stacks/encryption/-/encryption-4.3.4.tgz#6adc9bd5e0e2716aadbe6832f07ccaf5dcd8c3be"
   integrity sha512-c7LG82CPxEGBYDeyws+aOkP+HZm3rG+w1CLXZHWjO5i76wsqyRDsgrLeoUqs55ClMsPzi8g6CmI065WlyJxuYA==
@@ -1103,7 +1116,7 @@
   dependencies:
     prettier "^2.3.0"
 
-"@stacks/profile@^4.3.2":
+"@stacks/profile@^4.3.2", "@stacks/profile@^4.3.4":
   version "4.3.4"
   resolved "https://registry.yarnpkg.com/@stacks/profile/-/profile-4.3.4.tgz#f88ea4ad50bfb7fe15fe112e43475bf6fdf8a796"
   integrity sha512-9RyfaCWXtJoclQk6kSKbPEPO/27t2bou49IDU1OIpTjZNALUnD6XvZAI5PTXKBZaMJStTWZYTJsm2M87eEIOuw==
@@ -1114,6 +1127,17 @@
     jsontokens "^3.1.1"
     schema-inspector "2.0.1"
     zone-file "^2.0.0-beta.3"
+
+"@stacks/storage@^4.3.4":
+  version "4.3.4"
+  resolved "https://registry.yarnpkg.com/@stacks/storage/-/storage-4.3.4.tgz#b40e73d561d07651df544ab96a760f604fbf047c"
+  integrity sha512-XfkDMrGVRBv/pRFaUjF8nQIwAsNSWT4qgJomDpo21g3CO38xYAnEoDIb6J0eok7jlLsSLB9rbtXHyFjJy7BXIw==
+  dependencies:
+    "@stacks/auth" "^4.3.4"
+    "@stacks/common" "^4.3.4"
+    "@stacks/encryption" "^4.3.4"
+    "@stacks/network" "^4.3.4"
+    jsontokens "^3.1.1"
 
 "@stacks/transactions@4.3.2":
   version "4.3.2"
