@@ -1,9 +1,9 @@
-import "../styles/globals.css";
+import "../../styles/globals.css";
 import type { AppProps } from "next/app";
 import { ChakraProvider } from "@chakra-ui/react";
 import { theme } from "../theme";
 import { useEffect } from "react";
-import { useAuth } from "../src/hooks/use-auth";
+import { useAuth } from "@/hooks/use-auth";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const { userSession, setUserData } = useAuth();

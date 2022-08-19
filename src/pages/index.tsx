@@ -1,7 +1,6 @@
 import { Button, Center, Heading } from "@chakra-ui/react";
-import { lchown } from "fs";
 import type { NextPage } from "next";
-import { useAuth } from "../src/hooks/use-auth";
+import { useAuth } from "@/hooks/use-auth";
 
 const Home: NextPage = () => {
   const { authenticate, logout, userData } = useAuth();
