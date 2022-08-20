@@ -3,6 +3,17 @@ import { Storage } from "@stacks/storage";
 
 const METADATA_FILE_PATH = ".vaultacks/metadata.json";
 
+type MetadataFile = {
+  files: File[];
+};
+
+type File = {
+  path: string;
+  isPublic: boolean;
+  lastModified: string;
+  url: string;
+};
+
 export const useStorage = () => {
   const { userSession } = useAuth();
 
@@ -15,29 +26,52 @@ export const useStorage = () => {
   ) => {
     const existingMetadata = await getMetadataFile();
 
-    if (existingMetadata) {
-      const newMetadata = {
-        ...existingMetadata,
-        [path]: {
-          isPublic,
-          lastModified: new Date().toISOString(),
-        },
-      };
+    // if (existingMetadata) {
 
-      await saveMetadataFile(newMetadata);
-    } else {
-      await saveMetadataFile({
-        [path]: {
-          isPublic,
-          lastModified: new Date().toISOString(),
-        },
-      });
-    }
+    // 	const newMetadata = {
+    // 	};
+    // 	if (existingMetadata.files)
+    // 		newMetadata.files = { ...existingMetadata.files };
+    // 	if (existingMetadata.files[path])
+    // 		newMetadata.files[path] = { ...existingMetadata.files[path] };
+    // 	newMetadata.files[path] = {
+    // 		...newMetadata.files[path],
+    // 		isPublic,
+    // 	};
+    // 	await saveMetadataFile(newMetadata);
+    // } else {
+    //   await saveMetadataFile([
+    //     [path]: {
+    //       isPublic,
+    //       lastModified: new Date().toISOString(),
+    //     },
+    //   ]);
+    // }
 
     const url = await storage.putFile(path, data, {
       encrypt: !isPublic,
       dangerouslyIgnoreEtag: true,
     });
+
+    const currentFileMetadata = {
+      path,
+      isPublic,
+      lastModified: new Date().toISOString(),
+      url,
+    };
+
+    if (existingMetadata) {
+      const newMetadata: MetadataFile = existingMetadata;
+      if (existingMetadata.files) {
+        newMetadata.files = { ...existingMetadata.files, currentFileMetadata };
+      }
+
+      await saveMetadataFile(newMetadata);
+    } else {
+      await saveMetadataFile({
+        files: { [path]: currentFileMetadata },
+      });
+    }
 
     return url;
   };
@@ -49,7 +83,7 @@ export const useStorage = () => {
       if (res) {
         const json = JSON.parse(res as string);
 
-        console.log(json);
+        // console.log(json);
 
         if (json.isPublic) {
           return json;
@@ -66,7 +100,7 @@ export const useStorage = () => {
 
   const getMetadataFile = async () => {
     const metadata = await getFile(METADATA_FILE_PATH);
-    console.log("getMetadataFile", metadata);
+    // console.log("getMetadataFile", metadata);
     if (!metadata) return null;
     return metadata;
   };
