@@ -78,5 +78,30 @@ export const useStorage = () => {
     });
   };
 
-  return { storage, saveFile, getFile };
+  const deleteFile = async (path: string) => {
+    return await storage.deleteFile(path);
+  };
+
+  const deleteAllFiles = async () => {
+    const paths: string[] = [];
+    await storage.listFiles(path => {
+      paths.push(path);
+      return true;
+    });
+
+    for (const path of paths) {
+      await storage.deleteFile(path);
+      console.log(`delete ${path}`);
+    }
+  };
+
+  return {
+    storage,
+    saveFile,
+    getFile,
+    getMetadataFile,
+    saveMetadataFile,
+    deleteFile,
+    deleteAllFiles,
+  };
 };

@@ -7,7 +7,7 @@ import Upload from "components/Upload";
 
 const Home: NextPage = () => {
   const { authenticate, logout, userData } = useAuth();
-  const { saveFile, getFile, storage } = useStorage();
+  const { saveFile, getFile, storage, deleteAllFiles } = useStorage();
 
   const [filename, setFilename] = useState<string | null>(null);
 
@@ -47,6 +47,16 @@ const Home: NextPage = () => {
       >
         List Files
       </Button>
+
+      <Button
+        onClick={async () => {
+          await deleteAllFiles();
+          console.log("deleted all");
+        }}
+      >
+        Delete all files
+      </Button>
+
       <form
         onSubmit={async e => {
           e.preventDefault();
