@@ -1,3 +1,3 @@
 {
-  "conventionalCommits.scopes": ["stacks", "upload", "storage", "tabs"]
+  "conventionalCommits.scopes": ["stacks", "upload", "storage", "tabs", "files"]
 }

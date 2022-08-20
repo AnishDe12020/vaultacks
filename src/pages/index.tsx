@@ -4,6 +4,7 @@ import { useAuth } from "@/hooks/use-auth";
 import { useStorage } from "@/hooks/use-storage";
 import { useState } from "react";
 import Upload from "components/Upload";
+import Files from "@/components/Files";
 
 const Home: NextPage = () => {
   const { authenticate, logout, userData } = useAuth();
@@ -74,6 +75,7 @@ const Home: NextPage = () => {
       <Spacer my={8} />
 
       <Upload />
+      <Files />
     </Center>
   );
 };

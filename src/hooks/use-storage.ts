@@ -1,18 +1,8 @@
 import { useAuth } from "./use-auth";
 import { Storage } from "@stacks/storage";
+import { MetadataFile } from "@/types/storage";
 
 const METADATA_FILE_PATH = ".vaultacks/metadata.json";
-
-type MetadataFile = {
-  files: File[];
-};
-
-type File = {
-  path: string;
-  isPublic: boolean;
-  lastModified: string;
-  url: string;
-};
 
 export const useStorage = () => {
   const { userSession } = useAuth();
