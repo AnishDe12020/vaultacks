@@ -1,5 +1,7 @@
 import { extendTheme } from "@chakra-ui/react";
 
+import Tabs from "./components/tabs";
+
 const theme = extendTheme({
   styles: {
     global: {
@@ -11,6 +13,9 @@ const theme = extendTheme({
   config: {
     initialColorMode: "dark",
     useSystemColorMode: false,
+  },
+  components: {
+    Tabs: Tabs,
   },
 });
 
