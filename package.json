@@ -19,7 +19,9 @@
     "jotai": "^1.7.8",
     "next": "12.2.5",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "react-dropzone": "^14.2.2",
+    "react-feather": "^2.0.10"
   },
   "devDependencies": {
     "@chakra-ui/cli": "^2.1.6",
