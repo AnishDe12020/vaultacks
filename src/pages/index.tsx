@@ -1,12 +1,4 @@
-import {
-  Button,
-  Center,
-  Flex,
-  Heading,
-  Input,
-  Spacer,
-  Textarea,
-} from "@chakra-ui/react";
+import { Button, Center, Flex, Heading, Input, Spacer } from "@chakra-ui/react";
 import type { NextPage } from "next";
 import { useAuth } from "@/hooks/use-auth";
 import { useStorage } from "@/hooks/use-storage";
@@ -18,8 +10,6 @@ const Home: NextPage = () => {
   const { saveFile, getFile, storage } = useStorage();
 
   const [filename, setFilename] = useState<string | null>(null);
-
-  console.log(userData);
 
   return (
     <Center mt={8} as={Flex} flexDir="column">

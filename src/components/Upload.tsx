@@ -58,7 +58,7 @@ const Upload = () => {
 
   return (
     <Box>
-      <Tabs>
+      <Tabs variant="unstyled">
         <TabList>
           <Tab>Text</Tab>
           <Tab>File</Tab>

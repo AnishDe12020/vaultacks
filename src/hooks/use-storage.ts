@@ -1,31 +1,45 @@
 import { useAuth } from "./use-auth";
 import { Storage } from "@stacks/storage";
 
+const METADATA_FILE_PATH = ".vaultacks/metadata.json";
+
 export const useStorage = () => {
   const { userSession } = useAuth();
 
   const storage = new Storage({ userSession });
 
   const saveFile = async (
-    filename: string,
+    path: string,
     data: any,
     isPublic: boolean = false
   ) => {
-    try {
-      const url = await storage.putFile(
-        filename,
-        JSON.stringify({ data, isPublic }),
-        {
-          encrypt: !isPublic,
-          dangerouslyIgnoreEtag: true,
-        }
-      );
+    const existingMetadata = await getMetadataFile();
 
-      return url;
-    } catch (e) {
-      console.error(e);
-      return null;
+    if (existingMetadata) {
+      const newMetadata = {
+        ...existingMetadata,
+        [path]: {
+          isPublic,
+          lastModified: new Date().toISOString(),
+        },
+      };
+
+      await saveMetadataFile(newMetadata);
+    } else {
+      await saveMetadataFile({
+        [path]: {
+          isPublic,
+          lastModified: new Date().toISOString(),
+        },
+      });
     }
+
+    const url = await storage.putFile(path, data, {
+      encrypt: !isPublic,
+      dangerouslyIgnoreEtag: true,
+    });
+
+    return url;
   };
 
   const getFile = async (filename: string) => {
@@ -48,6 +62,20 @@ export const useStorage = () => {
     } catch (e) {
       console.error(e);
     }
+  };
+
+  const getMetadataFile = async () => {
+    const metadata = await getFile(METADATA_FILE_PATH);
+    console.log("getMetadataFile", metadata);
+    if (!metadata) return null;
+    return metadata;
+  };
+
+  const saveMetadataFile = async (metadata: any) => {
+    await storage.putFile(METADATA_FILE_PATH, JSON.stringify(metadata), {
+      encrypt: true,
+      dangerouslyIgnoreEtag: true,
+    });
   };
 
   return { storage, saveFile, getFile };
