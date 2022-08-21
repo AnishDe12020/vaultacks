@@ -125,9 +125,16 @@ const Upload = () => {
 
         <TabPanels>
           <TabPanel>
-            <FormControl isRequired>
+            <FormControl height="300px" width="400px" isRequired>
               <FormLabel>Text</FormLabel>
-              <Textarea onChange={handleTextChange} />
+              <Textarea
+                onChange={handleTextChange}
+                height="90%"
+                placeholder={
+                  data &&
+                  "A file has already been uploaded. Adding text there will replace the existing data"
+                }
+              />
             </FormControl>
           </TabPanel>
           <TabPanel>
@@ -143,6 +150,9 @@ const Upload = () => {
               rounded="lg"
               cursor="pointer"
               _hover={{ borderColor: "whiteAlpha.500" }}
+              height="300px"
+              width="400px"
+              textAlign="center"
               {...getRootProps()}
             >
               <input {...getInputProps()} />
@@ -159,6 +169,13 @@ const Upload = () => {
                     Drag and drop the file here, or click to select files
                   </Text>
                   <Text>Uploading only 1 file is supported for now</Text>
+                  {data && (
+                    <Text>
+                      A file has already been uploaded or there is text in the
+                      text field. Uploading a file will replace the existing
+                      data
+                    </Text>
+                  )}
                 </>
               )}
             </Flex>
