@@ -104,6 +104,7 @@ const Upload = () => {
   };
 
   const handleUpload = async () => {
+    startUploadLoading();
     const url = await saveFile(filename, data, isPublic);
 
     toast({
@@ -113,6 +114,7 @@ const Upload = () => {
       duration: 3000,
       isClosable: true,
     });
+    stopUploadLoading();
   };
 
   return (
@@ -198,7 +200,9 @@ const Upload = () => {
           />
         </FormControl>
 
-        <Button onClick={handleUpload}>Upload</Button>
+        <Button onClick={handleUpload} isLoading={isUploadLoading}>
+          Upload
+        </Button>
       </Flex>
     </Box>
   );
