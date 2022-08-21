@@ -16,28 +16,6 @@ export const useStorage = () => {
   ) => {
     const existingMetadata = await getMetadataFile();
 
-    // if (existingMetadata) {
-
-    // 	const newMetadata = {
-    // 	};
-    // 	if (existingMetadata.files)
-    // 		newMetadata.files = { ...existingMetadata.files };
-    // 	if (existingMetadata.files[path])
-    // 		newMetadata.files[path] = { ...existingMetadata.files[path] };
-    // 	newMetadata.files[path] = {
-    // 		...newMetadata.files[path],
-    // 		isPublic,
-    // 	};
-    // 	await saveMetadataFile(newMetadata);
-    // } else {
-    //   await saveMetadataFile([
-    //     [path]: {
-    //       isPublic,
-    //       lastModified: new Date().toISOString(),
-    //     },
-    //   ]);
-    // }
-
     const url = await storage.putFile(path, data, {
       encrypt: !isPublic,
       dangerouslyIgnoreEtag: true,
@@ -76,8 +54,6 @@ export const useStorage = () => {
       if (res) {
         const json = JSON.parse(res as string);
 
-        // console.log(json);
-
         if (json.isPublic) {
           return json;
         } else {
@@ -106,6 +82,15 @@ export const useStorage = () => {
   };
 
   const deleteFile = async (path: string) => {
+    const existingMetadata = await getMetadataFile();
+
+    const newMetadata: MetadataFile = {
+      ...existingMetadata,
+      files: { ...existingMetadata.files, [path]: undefined },
+    };
+
+    await saveMetadataFile(newMetadata);
+
     return await storage.deleteFile(path);
   };
 
