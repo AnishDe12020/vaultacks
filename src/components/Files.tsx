@@ -55,19 +55,20 @@ const Files = () => {
   const handleDeleteFile = async (path: string) => {
     startDeleteLoading();
     await deleteFile(path);
+    await fetchFiles();
     stopDeleteLoading();
     onDeleteAlertDialogClose();
   };
 
-  useEffect(() => {
-    const fetch = async () => {
-      const res = await getMetadataFile();
-      setMetadata(res);
-      stopFilesLoading();
-    };
-
+  const fetchFiles = async () => {
     startFilesLoading();
-    fetch();
+    const res = await getMetadataFile();
+    setMetadata(res);
+    stopFilesLoading();
+  };
+
+  useEffect(() => {
+    fetchFiles();
   }, []);
 
   return (
