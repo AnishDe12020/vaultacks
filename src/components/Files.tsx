@@ -1,6 +1,9 @@
 import useLoading from "@/hooks/use-loading";
 import { useStorage } from "@/hooks/use-storage";
 import {
+  AlertDialog,
+  AlertDialogHeader,
+  AlertDialogBody,
   Button,
   Flex,
   Heading,
@@ -15,34 +18,62 @@ import {
   Spinner,
   Text,
   Tooltip,
+  useDisclosure,
+  AlertDialogFooter,
+  AlertDialogOverlay,
+  AlertDialogContent,
+  Box,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { MutableRefObject, useEffect, useRef, useState } from "react";
 import { IFile, MetadataFile } from "@/types/storage";
 import { format } from "date-fns";
 import { Share2, Trash2 } from "react-feather";
 
 const Files = () => {
-  const { getMetadataFile } = useStorage();
+  const { getMetadataFile, deleteFile } = useStorage();
   const [metadata, setMetadata] = useState<MetadataFile | null>(null);
-  const { isLoading, startLoading, stopLoading } = useLoading();
+  const {
+    isLoading: isFilesLoading,
+    startLoading: startFilesLoading,
+    stopLoading: stopFilesLoading,
+  } = useLoading();
+  const {
+    isLoading: isDeleteLoading,
+    startLoading: startDeleteLoading,
+    stopLoading: stopDeleteLoading,
+  } = useLoading();
+
+  const {
+    isOpen: isDeleteAlertDialogOpen,
+    onOpen: onDeleteAlertDialogOpen,
+    onClose: onDeleteAlertDialogClose,
+  } = useDisclosure();
+
+  const deleteDialogCancelRef =
+    useRef<HTMLButtonElement>() as MutableRefObject<HTMLButtonElement>;
+
+  const handleDeleteFile = async (path: string) => {
+    startDeleteLoading();
+    await deleteFile(path);
+    stopDeleteLoading();
+    onDeleteAlertDialogClose();
+  };
 
   useEffect(() => {
     const fetch = async () => {
       const res = await getMetadataFile();
       setMetadata(res);
-      stopLoading();
+      stopFilesLoading();
     };
 
-    startLoading();
+    startFilesLoading();
     fetch();
   }, []);
-
-  console.log(metadata?.files);
 
   return (
     <>
       <Heading>Files</Heading>
-      {isLoading ? (
+      {isFilesLoading ? (
         <Spinner />
       ) : (
         <Flex direction="column" experimental_spaceY={4}>
@@ -70,14 +101,53 @@ const Files = () => {
                   </Tooltip>
 
                   <Flex experimental_spaceX={4}>
-                    <Button
-                      leftIcon={<Trash2 />}
-                      colorScheme="red"
-                      bg="red.400"
-                      size="sm"
-                    >
-                      Delete
-                    </Button>
+                    <Box>
+                      <Button
+                        leftIcon={<Trash2 />}
+                        colorScheme="red"
+                        bg="red.400"
+                        size="sm"
+                        onClick={onDeleteAlertDialogOpen}
+                      >
+                        Delete
+                      </Button>
+                      <AlertDialog
+                        isOpen={isDeleteAlertDialogOpen}
+                        onClose={onDeleteAlertDialogClose}
+                        leastDestructiveRef={deleteDialogCancelRef}
+                      >
+                        <AlertDialogOverlay>
+                          <AlertDialogContent>
+                            <AlertDialogHeader>Delete File</AlertDialogHeader>
+                            <AlertDialogBody>
+                              Are you sure you want to delete this file? This
+                              operation cannot be undone.
+                            </AlertDialogBody>
+                            <AlertDialogFooter
+                              as={Flex}
+                              experimental_spaceX={4}
+                            >
+                              <Button
+                                onClick={onDeleteAlertDialogClose}
+                                ref={deleteDialogCancelRef}
+                              >
+                                Cancel
+                              </Button>
+                              <Button
+                                colorScheme="red"
+                                bg="red.400"
+                                onClick={async () =>
+                                  await handleDeleteFile(path)
+                                }
+                                isLoading={isDeleteLoading}
+                              >
+                                Delete
+                              </Button>
+                            </AlertDialogFooter>
+                          </AlertDialogContent>
+                        </AlertDialogOverlay>
+                      </AlertDialog>
+                    </Box>
                     <Popover trigger="click">
                       <PopoverTrigger>
                         <Button
