@@ -1,8 +1,8 @@
 export type MetadataFile = {
-  files: File[];
+  files: IFile[];
 };
 
-export type File = {
+export type IFile = {
   path: string;
   isPublic: boolean;
   lastModified: string;

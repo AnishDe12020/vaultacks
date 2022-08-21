@@ -1,6 +1,8 @@
 import { extendTheme } from "@chakra-ui/react";
 
 import Tabs from "./components/tabs";
+import Tooltip from "./components/tooltip";
+import Popover from "./components/popover";
 
 const theme = extendTheme({
   styles: {
@@ -15,7 +17,9 @@ const theme = extendTheme({
     useSystemColorMode: false,
   },
   components: {
-    Tabs: Tabs,
+    Tabs,
+    Tooltip,
+    Popover,
   },
 });
 
