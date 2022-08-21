@@ -4,6 +4,7 @@ import { ChakraProvider } from "@chakra-ui/react";
 import { theme } from "../theme";
 import { useEffect } from "react";
 import { useAuth } from "@/hooks/use-auth";
+import Header from "@/components/Header";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const { userSession, setUserData } = useAuth();
@@ -20,6 +21,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <ChakraProvider theme={theme}>
+      <Header />
       <Component {...pageProps} />
     </ChakraProvider>
   );
