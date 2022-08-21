@@ -30,13 +30,9 @@ import { format } from "date-fns";
 import { Share2, Trash2 } from "react-feather";
 
 const Files = () => {
-  const { getMetadataFile, deleteFile } = useStorage();
-  const [metadata, setMetadata] = useState<MetadataFile | null>(null);
-  const {
-    isLoading: isFilesLoading,
-    startLoading: startFilesLoading,
-    stopLoading: stopFilesLoading,
-  } = useLoading();
+  const { refreshMetadata, deleteFile, metadata, isMetadataRefreshing } =
+    useStorage();
+
   const {
     isLoading: isDeleteLoading,
     startLoading: startDeleteLoading,
@@ -55,26 +51,22 @@ const Files = () => {
   const handleDeleteFile = async (path: string) => {
     startDeleteLoading();
     await deleteFile(path);
-    await fetchFiles();
     stopDeleteLoading();
     onDeleteAlertDialogClose();
   };
 
-  const fetchFiles = async () => {
-    startFilesLoading();
-    const res = await getMetadataFile();
-    setMetadata(res);
-    stopFilesLoading();
-  };
-
   useEffect(() => {
+    const fetchFiles = async () => {
+      await refreshMetadata();
+    };
+
     fetchFiles();
   }, []);
 
   return (
     <>
       <Heading>Files</Heading>
-      {isFilesLoading ? (
+      {isMetadataRefreshing ? (
         <Spinner />
       ) : (
         <Flex direction="column" experimental_spaceY={4}>

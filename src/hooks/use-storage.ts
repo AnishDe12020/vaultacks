@@ -1,13 +1,34 @@
 import { useAuth } from "./use-auth";
 import { Storage } from "@stacks/storage";
 import { MetadataFile } from "@/types/storage";
+import { useState } from "react";
+import useLoading from "./use-loading";
 
 const METADATA_FILE_PATH = ".vaultacks/metadata.json";
 
 export const useStorage = () => {
   const { userSession } = useAuth();
+  const [metadata, setMetadata] = useState<MetadataFile | undefined>();
+  const {
+    isLoading: isMetadataRefreshing,
+    startLoading: startMetadataRefreshingLoading,
+    stopLoading: stopMetadataRefreshingLoading,
+  } = useLoading();
+
+  console.log(
+    "metadata",
+    metadata && metadata.files && Object.keys(metadata?.files).length,
+    metadata
+  );
 
   const storage = new Storage({ userSession });
+
+  const refreshMetadata = async () => {
+    startMetadataRefreshingLoading();
+    const res = await getMetadataFile();
+    setMetadata(res);
+    stopMetadataRefreshingLoading();
+  };
 
   const saveFile = async (
     path: string,
@@ -43,6 +64,8 @@ export const useStorage = () => {
         files: { [path]: currentFileMetadata },
       });
     }
+
+    await refreshMetadata();
 
     return url;
   };
@@ -91,7 +114,9 @@ export const useStorage = () => {
 
     await saveMetadataFile(newMetadata);
 
-    return await storage.deleteFile(path);
+    await storage.deleteFile(path);
+
+    await refreshMetadata();
   };
 
   const deleteAllFiles = async () => {
@@ -115,5 +140,8 @@ export const useStorage = () => {
     saveMetadataFile,
     deleteFile,
     deleteAllFiles,
+    metadata,
+    refreshMetadata,
+    isMetadataRefreshing,
   };
 };

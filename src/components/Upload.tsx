@@ -37,7 +37,7 @@ const Upload = () => {
     stopLoading: stopUploadLoading,
   } = useLoading();
 
-  const { saveFile } = useStorage();
+  const { saveFile, refreshMetadata } = useStorage();
 
   const toast = useToast();
 
