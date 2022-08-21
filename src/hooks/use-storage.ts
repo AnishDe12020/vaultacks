@@ -53,7 +53,10 @@ export const useStorage = () => {
     if (existingMetadata) {
       const newMetadata: MetadataFile = existingMetadata;
       if (existingMetadata.files) {
-        newMetadata.files = { ...existingMetadata.files, currentFileMetadata };
+        newMetadata.files = {
+          ...existingMetadata.files,
+          [path]: currentFileMetadata,
+        };
       }
 
       await saveMetadataFile(newMetadata);
