@@ -1,8 +1,16 @@
-import { Button, Center, Flex, Heading, Input, Spacer } from "@chakra-ui/react";
+import {
+  Button,
+  Center,
+  Flex,
+  Heading,
+  Input,
+  Link,
+  Spacer,
+} from "@chakra-ui/react";
 import type { NextPage } from "next";
 import { useAuth } from "@/hooks/use-auth";
-import Upload from "components/Upload";
 import Files from "@/components/Files";
+import NextLink from "next/link";
 
 const Home: NextPage = () => {
   const { authenticate, logout, userData } = useAuth();
@@ -18,7 +26,10 @@ const Home: NextPage = () => {
 
       <Spacer my={8} />
 
-      <Upload />
+      <NextLink href="/upload" passHref>
+        <Button as={Link}>Upload Files</Button>
+      </NextLink>
+
       <Files />
     </Center>
   );
