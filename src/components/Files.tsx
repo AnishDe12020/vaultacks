@@ -87,11 +87,13 @@ const Files = () => {
                   <Text fontWeight="bold" fontSize="lg">
                     {path}
                   </Text>
-                  <Tooltip label={format(new Date(lastModified), "PPPPpppp")}>
-                    <Text width="fit-content">
-                      Last modified: {format(new Date(lastModified), "PPP")}
-                    </Text>
-                  </Tooltip>
+                  <Box>
+                    <Tooltip label={format(new Date(lastModified), "PPPPpppp")}>
+                      <Text width="fit-content">
+                        Last modified: {format(new Date(lastModified), "PPP")}
+                      </Text>
+                    </Tooltip>
+                  </Box>
 
                   <Flex experimental_spaceX={4}>
                     <Box>
@@ -141,41 +143,52 @@ const Files = () => {
                         </AlertDialogOverlay>
                       </AlertDialog>
                     </Box>
-                    <Popover trigger="click">
-                      <PopoverTrigger>
-                        <Button
-                          as={isPublic ? Link : Button}
-                          href={isPublic && url}
-                          isExternal={isPublic}
-                          colorScheme="cyan"
-                          backgroundColor="cyan.400"
-                          leftIcon={<Share2 />}
-                          size="sm"
-                        >
-                          Share
-                        </Button>
-                      </PopoverTrigger>
-                      <PopoverContent>
-                        <PopoverArrow />
-                        <PopoverCloseButton />
-                        <PopoverHeader>Private File</PopoverHeader>
-                        <PopoverBody>
-                          <Text>
-                            This is a private file. You can go to the URL but
-                            you will be only able to see the encrypted content
-                          </Text>
+                    {isPublic ? (
+                      <Button
+                        as={Link}
+                        href={url}
+                        isExternal
+                        colorScheme="cyan"
+                        backgroundColor="cyan.400"
+                        leftIcon={<Share2 />}
+                        size="sm"
+                      >
+                        Share
+                      </Button>
+                    ) : (
+                      <Popover trigger="click">
+                        <PopoverTrigger>
                           <Button
-                            as={Link}
-                            isExternal
+                            colorScheme="cyan"
+                            backgroundColor="cyan.400"
+                            leftIcon={<Share2 />}
                             size="sm"
-                            href={url}
-                            mt={2}
                           >
-                            Go to private URL
+                            Share
                           </Button>
-                        </PopoverBody>
-                      </PopoverContent>
-                    </Popover>
+                        </PopoverTrigger>
+                        <PopoverContent>
+                          <PopoverArrow />
+                          <PopoverCloseButton />
+                          <PopoverHeader>Private File</PopoverHeader>
+                          <PopoverBody>
+                            <Text>
+                              This is a private file. You can go to the URL but
+                              you will be only able to see the encrypted content
+                            </Text>
+                            <Button
+                              as={Link}
+                              isExternal
+                              size="sm"
+                              href={url}
+                              mt={2}
+                            >
+                              Go to private URL
+                            </Button>
+                          </PopoverBody>
+                        </PopoverContent>
+                      </Popover>
+                    )}
                   </Flex>
                 </Flex>
               );
