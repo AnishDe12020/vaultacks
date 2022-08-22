@@ -1,9 +1,20 @@
-import { Heading, Spinner, Grid, Button, Spacer } from "@chakra-ui/react";
-import { MutableRefObject, useEffect, useRef } from "react";
+import {
+  Spinner,
+  Grid,
+  Button,
+  Spacer,
+  Center,
+  Text,
+  Code,
+  Link,
+  Flex,
+} from "@chakra-ui/react";
+import { useEffect } from "react";
 import File from "@/components/File";
 import { IFile, MetadataFile } from "@/types/storage";
 import { useStorage } from "@/hooks/use-storage";
 import { RefreshCcw } from "react-feather";
+import NextLink from "next/link";
 
 const Files = () => {
   const { refreshMetadata, metadata, isMetadataRefreshing } = useStorage();
@@ -55,7 +66,17 @@ const Files = () => {
               );
             })
           ) : (
-            <p>No files</p>
+            <Center as={Flex} flexDirection="column" experimental_spaceX={4}>
+              <Text fontSize="xl" fontWeight="semibold">
+                No files found
+              </Text>
+              <Text>
+                Upload a file by heading over to{" "}
+                <NextLink href="/upload" passHref>
+                  <Code as={Link}>/upload</Code>
+                </NextLink>
+              </Text>
+            </Center>
           )}
         </Grid>
       )}
