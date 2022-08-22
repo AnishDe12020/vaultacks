@@ -13,7 +13,19 @@ import {
 } from "@chakra-ui/react";
 import { Menu, X } from "react-feather";
 
-export default function WithSubnavigation() {
+interface NavItem {
+  label: string;
+  href?: string;
+}
+
+const NAV_ITEMS: Array<NavItem> = [
+  {
+    label: "Upload",
+    href: "/upload",
+  },
+];
+
+const Header = () => {
   const { isOpen, onToggle } = useDisclosure();
 
   const { authenticate, logout, userData } = useAuth();
@@ -24,55 +36,41 @@ export default function WithSubnavigation() {
         minH={"60px"}
         py={{ base: 2 }}
         px={{ base: 4 }}
-        border="1px solid #2d2d2e"
         align={"center"}
+        borderBottom="1px"
+        borderColor="brand.secondary"
+        justifyContent={"space-between"}
       >
-        <Flex
-          flex={{ base: 1, md: "auto" }}
-          ml={{ base: -2 }}
-          display={{ base: "flex", md: "none" }}
+        <IconButton
+          onClick={onToggle}
+          icon={
+            isOpen ? (
+              <Icon as={X} w={5} h={5} />
+            ) : (
+              <Icon as={Menu} w={5} h={5} />
+            )
+          }
+          variant={"ghost"}
+          aria-label={"Toggle Navigation"}
+          display={{ md: "none" }}
+        />
+        <Text
+          fontFamily={"heading"}
+          color="white"
+          fontSize="2xl"
+          fontWeight="bold"
+          mt={1}
         >
-          <IconButton
-            onClick={onToggle}
-            icon={
-              isOpen ? (
-                <Icon as={X} w={3} h={3} />
-              ) : (
-                <Icon as={Menu} w={4} h={4} />
-              )
-            }
-            variant={"ghost"}
-            aria-label={"Toggle Navigation"}
-          />
-        </Flex>
-        <Flex flex={{ base: 1 }} alignContent="center">
-          <Text
-            fontFamily={"heading"}
-            color="white"
-            fontSize="2xl"
-            fontWeight="bold"
-            mt={1}
-          >
-            Vaultacks
-          </Text>
+          Vaultacks
+        </Text>
 
-          <Flex display={{ base: "none", md: "flex" }} ml={10}>
-            <DesktopNav />
-          </Flex>
-        </Flex>
+        <DesktopNav />
 
-        <Stack
-          flex={{ base: 1, md: 0 }}
-          justify={"flex-end"}
-          direction={"row"}
-          spacing={6}
-        >
-          {userData ? (
-            <Button onClick={logout}>Sign Out</Button>
-          ) : (
-            <Button onClick={authenticate}>Sign In</Button>
-          )}
-        </Stack>
+        {userData ? (
+          <Button onClick={logout}>Sign Out</Button>
+        ) : (
+          <Button onClick={authenticate}>Sign In</Button>
+        )}
       </Flex>
 
       <Collapse in={isOpen} animateOpacity>
@@ -80,11 +78,11 @@ export default function WithSubnavigation() {
       </Collapse>
     </Box>
   );
-}
+};
 
 const DesktopNav = () => {
   return (
-    <Stack direction={"row"} spacing={4}>
+    <Stack direction={"row"} spacing={4} display={{ base: "none", md: "flex" }}>
       {NAV_ITEMS.map(navItem => (
         <Link
           key={navItem.label}
@@ -136,14 +134,4 @@ const MobileNavItem = ({ label, href }: NavItem) => {
   );
 };
 
-interface NavItem {
-  label: string;
-  href?: string;
-}
-
-const NAV_ITEMS: Array<NavItem> = [
-  {
-    label: "Upload",
-    href: "/upload",
-  },
-];
+export default Header;
