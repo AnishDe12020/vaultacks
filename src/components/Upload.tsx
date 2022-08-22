@@ -127,7 +127,11 @@ const Upload = () => {
 
         <TabPanels>
           <TabPanel>
-            <FormControl height="300px" width="400px" isRequired>
+            <FormControl
+              height="300px"
+              width={{ base: "300px", md: "400px", lg: "500px" }}
+              isRequired
+            >
               <FormLabel>Text</FormLabel>
               <Textarea
                 onChange={handleTextChange}
@@ -153,7 +157,7 @@ const Upload = () => {
               cursor="pointer"
               _hover={{ borderColor: "whiteAlpha.500" }}
               height="300px"
-              width="400px"
+              width={{ base: "300px", md: "400px", lg: "500px" }}
               textAlign="center"
               {...getRootProps()}
             >
