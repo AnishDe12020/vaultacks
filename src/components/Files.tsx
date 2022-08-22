@@ -23,6 +23,7 @@ import {
   AlertDialogOverlay,
   AlertDialogContent,
   Box,
+  Grid,
 } from "@chakra-ui/react";
 import { MutableRefObject, useEffect, useRef, useState } from "react";
 import { IFile, MetadataFile } from "@/types/storage";
@@ -69,7 +70,11 @@ const Files = () => {
       {isMetadataRefreshing ? (
         <Spinner />
       ) : (
-        <Flex direction="column" experimental_spaceY={4}>
+        <Grid
+          templateColumns="repeat(auto-fit, minmax(300px, 1fr))"
+          gap={6}
+          w="100%"
+        >
           {metadata && Object.keys(metadata.files).length > 0 ? (
             Object.keys(metadata.files).map(path => {
               const { isPublic, lastModified, url }: IFile = metadata.files[
@@ -196,7 +201,7 @@ const Files = () => {
           ) : (
             <p>No files</p>
           )}
-        </Flex>
+        </Grid>
       )}
     </>
   );
