@@ -12,6 +12,7 @@ import {
   Icon,
 } from "@chakra-ui/react";
 import { Menu, X } from "react-feather";
+import NextLink from "next/link";
 
 interface NavItem {
   label: string;
@@ -54,15 +55,20 @@ const Header = () => {
           aria-label={"Toggle Navigation"}
           display={{ md: "none" }}
         />
-        <Text
-          fontFamily={"heading"}
-          color="white"
-          fontSize="2xl"
-          fontWeight="bold"
-          mt={1}
-        >
-          Vaultacks
-        </Text>
+        <NextLink href="/" passHref>
+          <Link
+            fontFamily={"heading"}
+            color="white"
+            fontSize="2xl"
+            fontWeight="bold"
+            _hover={{
+              color: "gray.300",
+            }}
+            mt={1}
+          >
+            Vaultacks
+          </Link>
+        </NextLink>
 
         <DesktopNav />
 
@@ -84,20 +90,19 @@ const DesktopNav = () => {
   return (
     <Stack direction={"row"} spacing={4} display={{ base: "none", md: "flex" }}>
       {NAV_ITEMS.map(navItem => (
-        <Link
-          key={navItem.label}
-          p={2}
-          href={navItem.href ?? "#"}
-          fontSize={"lg"}
-          fontWeight={500}
-          color="gray.200"
-          _hover={{
-            textDecoration: "none",
-            color: "gray.300",
-          }}
-        >
-          {navItem.label}
-        </Link>
+        <NextLink key={navItem.label} href={navItem.href ?? "#"} passHref>
+          <Link
+            p={2}
+            fontSize={"lg"}
+            fontWeight="semibold"
+            color="gray.100"
+            _hover={{
+              color: "gray.300",
+            }}
+          >
+            {navItem.label}
+          </Link>
+        </NextLink>
       ))}
     </Stack>
   );
@@ -115,22 +120,19 @@ const MobileNav = () => {
 
 const MobileNavItem = ({ label, href }: NavItem) => {
   return (
-    <Stack spacing={4}>
-      <Flex
+    <NextLink href={href ?? "#"} passHref>
+      <Link
         py={2}
-        as={Link}
         href={href ?? "#"}
-        justify={"space-between"}
-        align={"center"}
+        fontWeight="semibold"
+        color="gray.100"
         _hover={{
-          textDecoration: "none",
+          color: "gray.300",
         }}
       >
-        <Text fontWeight="semibold" color="gray.100">
-          {label}
-        </Text>
-      </Flex>
-    </Stack>
+        {label}
+      </Link>
+    </NextLink>
   );
 };
 
