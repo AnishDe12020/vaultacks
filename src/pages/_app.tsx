@@ -1,6 +1,6 @@
 import "../../styles/globals.css";
 import type { AppProps } from "next/app";
-import { ChakraProvider } from "@chakra-ui/react";
+import { ChakraProvider, chakra } from "@chakra-ui/react";
 import { theme } from "../theme";
 import { useEffect } from "react";
 import { useAuth } from "@/hooks/use-auth";
@@ -22,7 +22,9 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ChakraProvider theme={theme}>
       <Header />
-      <Component {...pageProps} />
+      <chakra.main px={{ base: 8, md: 16, lg: 32 }}>
+        <Component {...pageProps} />
+      </chakra.main>
     </ChakraProvider>
   );
 }
