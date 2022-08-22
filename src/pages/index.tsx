@@ -7,8 +7,12 @@ import NextLink from "next/link";
 const Home: NextPage = () => {
   return (
     <>
+      <Heading>Files</Heading>
+
       <NextLink href="/upload" passHref>
-        <Button as={Link}>Upload Files</Button>
+        <Button my={8} as={Link}>
+          Upload Files
+        </Button>
       </NextLink>
 
       <Files />

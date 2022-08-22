@@ -1,8 +1,9 @@
-import { Heading, Spinner, Grid } from "@chakra-ui/react";
+import { Heading, Spinner, Grid, Button, Spacer } from "@chakra-ui/react";
 import { MutableRefObject, useEffect, useRef } from "react";
 import File from "@/components/File";
 import { IFile, MetadataFile } from "@/types/storage";
 import { useStorage } from "@/hooks/use-storage";
+import { RefreshCcw } from "react-feather";
 
 const Files = () => {
   const { refreshMetadata, metadata, isMetadataRefreshing } = useStorage();
@@ -17,7 +18,19 @@ const Files = () => {
 
   return (
     <>
-      <Heading>Files</Heading>
+      {metadata ? (
+        <Button
+          onClick={async () => await refreshMetadata()}
+          leftIcon={<RefreshCcw />}
+          mb={8}
+          isLoading={isMetadataRefreshing}
+        >
+          Refresh
+        </Button>
+      ) : (
+        <Spacer mb={8} h={4} />
+      )}
+
       {isMetadataRefreshing ? (
         <Spinner />
       ) : (

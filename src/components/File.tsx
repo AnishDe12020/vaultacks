@@ -4,7 +4,6 @@ import {
   AlertDialogBody,
   Button,
   Flex,
-  Heading,
   Link,
   Popover,
   PopoverArrow,
@@ -13,7 +12,6 @@ import {
   PopoverContent,
   PopoverHeader,
   PopoverTrigger,
-  Spinner,
   Text,
   Tooltip,
   useDisclosure,
@@ -21,10 +19,8 @@ import {
   AlertDialogOverlay,
   AlertDialogContent,
   Box,
-  Grid,
 } from "@chakra-ui/react";
-import { MutableRefObject, useEffect, useRef } from "react";
-import { IFile, MetadataFile } from "@/types/storage";
+import { MutableRefObject, useRef } from "react";
 import { format } from "date-fns";
 import { Share2, Trash2 } from "react-feather";
 import useLoading from "@/hooks/use-loading";
