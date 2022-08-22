@@ -1,9 +1,10 @@
 const style = {
   baseStyle: {
-    backgroundColor: "#151516",
+    backgroundColor: "brand.primary",
     color: "gray.200",
-    opacity: 1,
-    border: "1px solid #2d2d2e",
+    borderStyle: "solid",
+    borderWidth: "1px",
+    borderColor: "brand.secondary",
     borderRadius: "md",
   },
 };

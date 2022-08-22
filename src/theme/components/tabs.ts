@@ -8,18 +8,21 @@ const variantCustomTabs: PartsStyleFunction = () => {
       color: "gray.300",
       _selected: {
         color: `white`,
-        bg: `whiteAlpha.200`,
+        bg: `brand.secondary`,
       },
       _hover: {
-        bg: "whiteAlpha.100",
+        bg: "brand.secondary",
       },
     },
     tablist: {
       borderRadius: "md",
-      backgroundColor: "whiteAlpha.200",
+      backgroundColor: "brand.primary",
       py: 2,
       px: 2,
       experimental_spaceX: 2,
+      borderStyle: "solid",
+      borderWidth: "1px",
+      borderColor: "brand.secondary",
     },
   };
 };

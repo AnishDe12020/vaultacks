@@ -23,6 +23,12 @@ const theme = extendTheme({
     Popover,
     Modal,
   },
+  colors: {
+    brand: {
+      secondary: "#2d2d2e",
+      primary: "#151516",
+    },
+  },
 });
 
 export { theme };
