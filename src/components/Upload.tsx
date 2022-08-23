@@ -225,7 +225,11 @@ const Upload = () => {
           />
         </FormControl>
 
-        <Button onClick={handleUpload} isLoading={isUploadLoading}>
+        <Button
+          onClick={handleUpload}
+          isLoading={isUploadLoading}
+          disabled={!filename || !data}
+        >
           Upload
         </Button>
       </Flex>
