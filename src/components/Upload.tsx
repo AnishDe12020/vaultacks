@@ -22,6 +22,8 @@ import { useCallback, useState } from "react";
 import { useDropzone, FileRejection } from "react-dropzone";
 import { FilePlus } from "react-feather";
 
+const MAX_FILE_SIZE = 15728640; // 20971520 is the max file size set by the default blockstack gaia hub. However, encryption increases the file size to almost 20MB (for a 15MB file).
+
 const Upload = () => {
   const [data, setData] = useState<string>("");
   const [filename, setFilename] = useState<string>("");
@@ -37,7 +39,7 @@ const Upload = () => {
     stopLoading: stopUploadLoading,
   } = useLoading();
 
-  const { saveFile, refreshMetadata } = useStorage();
+  const { saveFile } = useStorage();
 
   const toast = useToast();
 
@@ -73,13 +75,19 @@ const Upload = () => {
 
   const onDropRejected = useCallback(
     (fileRejections: FileRejection[]) => {
+      console.log(fileRejections);
+
+      const errorMessage =
+        fileRejections.length > 1
+          ? "You can only select 1 file"
+          : fileRejections[0].file.size > MAX_FILE_SIZE
+          ? "File is too big"
+          : "Unknown error";
+
       toast({
         status: "error",
         title: "File Drop Rejected",
-        description:
-          fileRejections.length > 1
-            ? "You can only select 1 file"
-            : "Unknown error",
+        description: errorMessage,
       });
     },
     [toast]
@@ -89,6 +97,7 @@ const Upload = () => {
     maxFiles: 1,
     onDropRejected,
     onDropAccepted,
+    maxSize: MAX_FILE_SIZE,
   });
 
   const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -105,15 +114,28 @@ const Upload = () => {
 
   const handleUpload = async () => {
     startUploadLoading();
-    const url = await saveFile(filename, data, isPublic);
 
-    toast({
-      title: "File uploaded",
-      description: url,
-      status: "success",
-      duration: 3000,
-      isClosable: true,
-    });
+    try {
+      const url = await saveFile(filename, data, isPublic);
+
+      toast({
+        title: "File uploaded",
+        description: url,
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
+    } catch (err) {
+      toast({
+        title: "Something went wrong",
+        description:
+          "Something went wrong when uploading the file. This could be issues with file sizes, encryption, network, or anything else related to uploading the file.",
+        status: "error",
+      });
+
+      console.error(err);
+    }
+
     stopUploadLoading();
   };
 
@@ -174,7 +196,9 @@ const Upload = () => {
                   <Text>
                     Drag and drop the file here, or click to select files
                   </Text>
+                  <Text>Max file size: 15MB</Text>
                   <Text>Uploading only 1 file is supported for now</Text>
+
                   {data && (
                     <Text>
                       A file has already been uploaded or there is text in the

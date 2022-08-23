@@ -39,6 +39,7 @@ export const useStorage = () => {
 
     const url = await storage.putFile(path, data, {
       encrypt: !isPublic,
+      cipherTextEncoding: "base64",
       dangerouslyIgnoreEtag: true,
     });
 

@@ -5,7 +5,7 @@ import Upload from "components/Upload";
 const Home: NextPage = () => {
   return (
     <>
-      <Heading>Upload Files</Heading>
+      <Heading mb={8}>Upload Files</Heading>
 
       <Upload />
     </>
