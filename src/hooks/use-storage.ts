@@ -3,6 +3,7 @@ import { Storage } from "@stacks/storage";
 import { MetadataFile } from "@/types/storage";
 import { useState } from "react";
 import useLoading from "./use-loading";
+import { useToast } from "@chakra-ui/react";
 
 const METADATA_FILE_PATH = ".vaultacks/metadata.json";
 
@@ -14,6 +15,7 @@ export const useStorage = () => {
     startLoading: startMetadataRefreshingLoading,
     stopLoading: stopMetadataRefreshingLoading,
   } = useLoading();
+  const toast = useToast();
 
   console.log(
     "metadata",
@@ -25,8 +27,18 @@ export const useStorage = () => {
 
   const refreshMetadata = async () => {
     startMetadataRefreshingLoading();
-    const res = await getMetadataFile();
-    setMetadata(res);
+    try {
+      const res = await getMetadataFile();
+      setMetadata(res);
+    } catch (err) {
+      console.error(err);
+      toast({
+        title: "Error fetching files",
+        description:
+          "Something went wrong when fetching the files. Please try again later",
+        status: "error",
+      });
+    }
     stopMetadataRefreshingLoading();
   };
 

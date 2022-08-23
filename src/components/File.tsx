@@ -19,6 +19,7 @@ import {
   AlertDialogOverlay,
   AlertDialogContent,
   Box,
+  useToast,
 } from "@chakra-ui/react";
 import { MutableRefObject, useRef } from "react";
 import { format } from "date-fns";
@@ -35,6 +36,7 @@ interface IFileProps {
 
 const File = ({ path, isPublic, lastModified, url }: IFileProps) => {
   const { deleteFile } = useStorage();
+  const toast = useToast();
 
   const {
     isLoading: isDeleteLoading,
@@ -53,7 +55,16 @@ const File = ({ path, isPublic, lastModified, url }: IFileProps) => {
 
   const handleDeleteFile = async (path: string) => {
     startDeleteLoading();
-    await deleteFile(path);
+    try {
+      await deleteFile(path);
+    } catch (err) {
+      console.error(err);
+      toast({
+        title: "Error deleting file",
+        description: "Something went wrong. Please try again later",
+        status: "error",
+      });
+    }
     stopDeleteLoading();
     onDeleteAlertDialogClose();
   };
@@ -65,6 +76,8 @@ const File = ({ path, isPublic, lastModified, url }: IFileProps) => {
       rounded="md"
       direction="column"
       experimental_spaceY={4}
+      border="1px"
+      borderColor="brand.secondary"
     >
       <Text fontWeight="bold" fontSize="lg">
         {path}

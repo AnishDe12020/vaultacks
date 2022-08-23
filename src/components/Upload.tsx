@@ -122,18 +122,15 @@ const Upload = () => {
         title: "File uploaded",
         description: url,
         status: "success",
-        duration: 3000,
-        isClosable: true,
       });
     } catch (err) {
+      console.error(err);
       toast({
         title: "Something went wrong",
         description:
           "Something went wrong when uploading the file. This could be issues with file sizes, encryption, network, or anything else related to uploading the file.",
         status: "error",
       });
-
-      console.error(err);
     }
 
     stopUploadLoading();
