@@ -22,10 +22,13 @@ import {
   useToast,
   Icon,
   HStack,
+  LinkBox,
+  LinkOverlay,
 } from "@chakra-ui/react";
 import { MutableRefObject, useRef } from "react";
 import { format } from "date-fns";
 import { Type, FileText, Share2, Trash2 } from "react-feather";
+import NextLink from "next/link";
 import useLoading from "@/hooks/use-loading";
 import { useStorage } from "@/hooks/use-storage";
 
@@ -73,14 +76,17 @@ const File = ({ path, isPublic, isString, lastModified, url }: IFileProps) => {
   };
 
   return (
-    <Flex
+    <LinkBox
+      as={Flex}
       bg="whiteAlpha.200"
       p={4}
-      rounded="md"
-      direction="column"
+      rounded="lg"
+      flexDirection="column"
       experimental_spaceY={4}
       border="1px"
       borderColor="brand.secondary"
+      transition="all 0.2s ease-in-out"
+      _hover={{ borderColor: "white" }}
     >
       <HStack spacing={2} alignItems="center">
         {isString ? (
@@ -92,9 +98,11 @@ const File = ({ path, isPublic, isString, lastModified, url }: IFileProps) => {
             <Icon as={FileText} aria-label="File" h={5} w={5} />
           </Tooltip>
         )}
-        <Text fontWeight="bold" fontSize="lg">
-          {path}
-        </Text>
+        <NextLink href={`/object/${path}`} passHref>
+          <LinkOverlay fontWeight="bold" fontSize="lg">
+            {path}
+          </LinkOverlay>
+        </NextLink>
       </HStack>
       <Box>
         <Tooltip label={format(new Date(lastModified), "PPPPpppp")}>
@@ -188,7 +196,7 @@ const File = ({ path, isPublic, isString, lastModified, url }: IFileProps) => {
           </Popover>
         )}
       </Flex>
-    </Flex>
+    </LinkBox>
   );
 };
 
