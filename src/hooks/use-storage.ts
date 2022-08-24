@@ -87,36 +87,37 @@ export const useStorage = () => {
   };
 
   const getFile = async (filename: string) => {
-    try {
-      const res = await storage.getFile(filename, { decrypt: false });
+    const fileMeta = await getFileMetadata(filename);
+    const res = await storage.getFile(filename, {
+      decrypt: !fileMeta.isPublic,
+    });
 
-      if (res) {
-        const json = JSON.parse(res as string);
-
-        if (json.isPublic) {
-          return json;
-        } else {
-          const decrypted = await userSession.decryptContent(res as string);
-          const decryptedJSON = JSON.parse(decrypted as string);
-          return decryptedJSON;
-        }
-      }
-    } catch (e) {
-      console.error(e);
-    }
+    return { meta: fileMeta, data: res };
   };
 
   const getMetadataFile = async () => {
-    const metadata = await getFile(METADATA_FILE_PATH);
-    // console.log("getMetadataFile", metadata);
+    try {
+      const metadata = await storage.getFile(METADATA_FILE_PATH, {
+        decrypt: true,
+      });
+      if (!metadata) return null;
+      return JSON.parse(metadata as string);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const getFileMetadata = async (path: string) => {
+    const metadata = await getMetadataFile();
     if (!metadata) return null;
-    return metadata;
+    return metadata.files[path];
   };
 
   const saveMetadataFile = async (metadata: any) => {
     await storage.putFile(METADATA_FILE_PATH, JSON.stringify(metadata), {
       encrypt: true,
       dangerouslyIgnoreEtag: true,
+      wasString: true,
     });
   };
 
@@ -153,6 +154,7 @@ export const useStorage = () => {
     saveFile,
     getFile,
     getMetadataFile,
+    getFileMetadata,
     saveMetadataFile,
     deleteFile,
     deleteAllFiles,
