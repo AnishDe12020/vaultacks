@@ -17,6 +17,7 @@ import {
   Flex,
   Text,
   Spinner,
+  Link,
 } from "@chakra-ui/react";
 import { useCallback, useState } from "react";
 import { useDropzone, FileRejection } from "react-dropzone";
@@ -120,7 +121,11 @@ const Upload = () => {
 
       toast({
         title: "File uploaded",
-        description: url,
+        description: (
+          <Link href={url} isExternal color="cyan.900" fontWeight="bold">
+            {url}
+          </Link>
+        ),
         status: "success",
       });
     } catch (err) {
@@ -140,28 +145,11 @@ const Upload = () => {
     <Box>
       <Tabs variant="custom">
         <TabList>
-          <Tab>Text</Tab>
           <Tab>File</Tab>
+          <Tab>Text</Tab>
         </TabList>
 
         <TabPanels>
-          <TabPanel>
-            <FormControl
-              height="300px"
-              width={{ base: "300px", md: "400px", lg: "500px" }}
-              isRequired
-            >
-              <FormLabel>Text</FormLabel>
-              <Textarea
-                onChange={handleTextChange}
-                height="90%"
-                placeholder={
-                  data &&
-                  "A file has already been uploaded. Adding text there will replace the existing data"
-                }
-              />
-            </FormControl>
-          </TabPanel>
           <TabPanel>
             <Flex
               direction="column"
@@ -206,6 +194,23 @@ const Upload = () => {
                 </>
               )}
             </Flex>
+          </TabPanel>
+          <TabPanel>
+            <FormControl
+              height="300px"
+              width={{ base: "300px", md: "400px", lg: "500px" }}
+              isRequired
+            >
+              <FormLabel>Text</FormLabel>
+              <Textarea
+                onChange={handleTextChange}
+                height="90%"
+                placeholder={
+                  data &&
+                  "A file has already been uploaded. Adding text there will replace the existing data"
+                }
+              />
+            </FormControl>
           </TabPanel>
         </TabPanels>
       </Tabs>
