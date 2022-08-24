@@ -45,7 +45,8 @@ export const useStorage = () => {
   const saveFile = async (
     path: string,
     data: any,
-    isPublic: boolean = false
+    isPublic: boolean = false,
+    isString: boolean = true
   ) => {
     const existingMetadata = await getMetadataFile();
 
@@ -53,6 +54,7 @@ export const useStorage = () => {
       encrypt: !isPublic,
       cipherTextEncoding: "base64",
       dangerouslyIgnoreEtag: true,
+      wasString: isString,
     });
 
     const currentFileMetadata = {
@@ -60,6 +62,7 @@ export const useStorage = () => {
       isPublic,
       lastModified: new Date().toISOString(),
       url,
+      isString,
     };
 
     if (existingMetadata) {

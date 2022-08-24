@@ -25,8 +25,12 @@ import { FilePlus } from "react-feather";
 
 const MAX_FILE_SIZE = 15728640; // 20971520 is the max file size set by the default blockstack gaia hub. However, encryption increases the file size to almost 20MB (for a 15MB file).
 
+type DATA_TYPE = "text" | "file";
+
 const Upload = () => {
   const [data, setData] = useState<string>("");
+  const [dataType, setDatatype] = useState<DATA_TYPE>("string");
+
   const [filename, setFilename] = useState<string>("");
   const [isPublic, setPublic] = useState<boolean>(false);
   const {
@@ -60,6 +64,7 @@ const Upload = () => {
 
       reader.onload = () => {
         setData(reader.result as string);
+        setDatatype("file");
         setFilename(file.name);
         toast({
           title: "Read file",
@@ -103,6 +108,7 @@ const Upload = () => {
 
   const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setData(e.target.value);
+    setDatatype("text");
   };
 
   const handleFilenameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -117,7 +123,7 @@ const Upload = () => {
     startUploadLoading();
 
     try {
-      const url = await saveFile(filename, data, isPublic);
+      const url = await saveFile(filename, data, isPublic, dataType === "text");
 
       toast({
         title: "File uploaded",
@@ -179,16 +185,20 @@ const Upload = () => {
               ) : (
                 <>
                   <Text>
-                    Drag and drop the file here, or click to select files
+                    Drag and drop the file here, or click to select a file
                   </Text>
                   <Text>Max file size: 15MB</Text>
                   <Text>Uploading only 1 file is supported for now</Text>
 
-                  {data && (
+                  {data && dataType === "file" ? (
                     <Text>
-                      A file has already been uploaded or there is text in the
-                      text field. Uploading a file will replace the existing
-                      data
+                      A file has already been uploaded. Uploading a file will
+                      replace the existing file
+                    </Text>
+                  ) : (
+                    <Text>
+                      There is some text in the text tab. Uploading a file will
+                      replaced the text
                     </Text>
                   )}
                 </>
@@ -207,7 +217,7 @@ const Upload = () => {
                 height="90%"
                 placeholder={
                   data &&
-                  "A file has already been uploaded. Adding text there will replace the existing data"
+                  "A file has already been uploaded. Adding text here will replace the existing file"
                 }
               />
             </FormControl>
