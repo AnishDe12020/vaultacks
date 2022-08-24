@@ -62,7 +62,7 @@ const PlaygroundPage: NextPage = () => {
       <form
         onSubmit={async e => {
           e.preventDefault();
-          console.log(await getFile(filename));
+          console.log(await getFile(filename as string));
         }}
       >
         <Flex direction="row" experimental_spaceX={4}>
