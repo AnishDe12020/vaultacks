@@ -9,8 +9,9 @@ import {
   Text,
   IconButton,
   useClipboard,
+  Button,
 } from "@chakra-ui/react";
-import { Type, FileText, Copy, Check } from "react-feather";
+import { Type, FileText, Copy, Check, Download } from "react-feather";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -27,6 +28,17 @@ const ObjectPage: NextPage = () => {
   );
 
   console.log(file);
+
+  const handleFileDownload = async () => {
+    const blob = new Blob([file?.data], { type: "application/octet-stream" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = file.meta.path;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
   useEffect(() => {
     const fetchFile = async () => {
@@ -75,7 +87,12 @@ const ObjectPage: NextPage = () => {
                 />
               </VStack>
             ) : (
-              <Text>File</Text>
+              <Button
+                leftIcon={<Icon as={Download} />}
+                onClick={handleFileDownload}
+              >
+                Download
+              </Button>
             )}
           </VStack>
         </Box>
