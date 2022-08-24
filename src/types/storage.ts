@@ -5,6 +5,7 @@ export type MetadataFile = {
 export type IFile = {
   path: string;
   isPublic: boolean;
+  isString: boolean;
   lastModified: string;
   url: string;
 };

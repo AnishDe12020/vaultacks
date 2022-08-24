@@ -20,21 +20,24 @@ import {
   AlertDialogContent,
   Box,
   useToast,
+  Icon,
+  HStack,
 } from "@chakra-ui/react";
 import { MutableRefObject, useRef } from "react";
 import { format } from "date-fns";
-import { Share2, Trash2 } from "react-feather";
+import { Type, FileText, Share2, Trash2 } from "react-feather";
 import useLoading from "@/hooks/use-loading";
 import { useStorage } from "@/hooks/use-storage";
 
 interface IFileProps {
   path: string;
   isPublic: boolean;
+  isString: boolean;
   lastModified: string;
   url: string;
 }
 
-const File = ({ path, isPublic, lastModified, url }: IFileProps) => {
+const File = ({ path, isPublic, isString, lastModified, url }: IFileProps) => {
   const { deleteFile } = useStorage();
   const toast = useToast();
 
@@ -79,9 +82,20 @@ const File = ({ path, isPublic, lastModified, url }: IFileProps) => {
       border="1px"
       borderColor="brand.secondary"
     >
-      <Text fontWeight="bold" fontSize="lg">
-        {path}
-      </Text>
+      <HStack spacing={2} alignItems="center">
+        {isString ? (
+          <Tooltip label="Text">
+            <Icon as={Type} aria-label="Text" h={5} w={5} />
+          </Tooltip>
+        ) : (
+          <Tooltip label="File">
+            <Icon as={FileText} aria-label="File" h={5} w={5} />
+          </Tooltip>
+        )}
+        <Text fontWeight="bold" fontSize="lg">
+          {path}
+        </Text>
+      </HStack>
       <Box>
         <Tooltip label={format(new Date(lastModified), "PPPPpppp")}>
           <Text width="fit-content">

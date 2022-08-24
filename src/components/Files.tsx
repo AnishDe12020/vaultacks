@@ -53,14 +53,14 @@ const Files = () => {
         >
           {metadata && Object.keys(metadata.files).length > 0 ? (
             Object.keys(metadata.files).map(path => {
-              const { isPublic, lastModified, url }: IFile = metadata?.files[
-                path as keyof MetadataFile["files"]
-              ] as IFile;
+              const { isPublic, isString, lastModified, url }: IFile = metadata
+                ?.files[path as keyof MetadataFile["files"]] as IFile;
               return (
                 <File
                   key={path}
                   path={path}
                   isPublic={isPublic}
+                  isString={isString}
                   lastModified={lastModified}
                   url={url}
                 />
