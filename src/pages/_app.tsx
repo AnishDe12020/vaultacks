@@ -52,7 +52,7 @@ function MyApp({ Component, pageProps }: AppProps) {
               >
                 Gaia
               </Link>
-              . Files our encrypted by default and can only be decrypted by your
+              . Files are encrypted by default and can only be decrypted by your
               wallet. You can also store public files, which will be stored in
               an unencrypted form.
             </Text>
