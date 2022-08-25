@@ -17,12 +17,6 @@ export const useStorage = () => {
   } = useLoading();
   const toast = useToast();
 
-  console.log(
-    "metadata",
-    metadata && metadata.files && Object.keys(metadata?.files).length,
-    metadata
-  );
-
   const storage = new Storage({ userSession });
 
   const refreshMetadata = async () => {

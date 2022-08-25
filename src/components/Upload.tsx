@@ -81,8 +81,6 @@ const Upload = () => {
 
   const onDropRejected = useCallback(
     (fileRejections: FileRejection[]) => {
-      console.log(fileRejections);
-
       const errorMessage =
         fileRejections.length > 1
           ? "You can only select 1 file"
