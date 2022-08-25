@@ -15,7 +15,8 @@ import { DefaultSeo } from "next-seo";
 import { theme } from "../theme";
 import { useAuth } from "@/hooks/use-auth";
 import Header from "@/components/Header";
-import SEO from "../next-seo.config";
+import SEO from "../../next-seo.config";
+import Logo from "@/components/Logo";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const { userSession, setUserData, authenticate, userData } = useAuth();
@@ -39,6 +40,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           <Component {...pageProps} />
         ) : (
           <>
+            <Logo height={128} width={128} />
             <Heading>Vaultacks</Heading>
             <Text as="h2" fontSize="xl" textAlign="center" mt={4} mb={16}>
               Vaultacks stores your data off-chain using{" "}

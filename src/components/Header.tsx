@@ -13,6 +13,7 @@ import {
 import { Menu, Upload, X } from "react-feather";
 import NextLink from "next/link";
 import { LogIn, LogOut } from "react-feather";
+import Logo from "@/components/Logo";
 
 interface NavItem {
   label: string;
@@ -62,11 +63,11 @@ const Header = () => {
             fontSize="2xl"
             fontWeight="bold"
             _hover={{
-              color: "gray.300",
+              opacity: 0.8,
             }}
             mt={1}
           >
-            Vaultacks
+            <Logo height={48} width={48} />
           </Link>
         </NextLink>
 
