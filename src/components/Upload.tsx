@@ -18,10 +18,11 @@ import {
   Text,
   Spinner,
   Link,
+  Icon,
 } from "@chakra-ui/react";
 import { useCallback, useState } from "react";
 import { useDropzone, FileRejection } from "react-dropzone";
-import { FilePlus } from "react-feather";
+import { FilePlus, Upload as UploadIcon } from "react-feather";
 
 const MAX_FILE_SIZE = 15728640; // 20971520 is the max file size set by the default blockstack gaia hub. However, encryption increases the file size to almost 20MB (for a 15MB file).
 
@@ -247,6 +248,7 @@ const Upload = () => {
           onClick={handleUpload}
           isLoading={isUploadLoading}
           disabled={!filename || !data}
+          leftIcon={<Icon as={UploadIcon} />}
         >
           Upload
         </Button>

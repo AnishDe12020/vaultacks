@@ -2,7 +2,6 @@ import { useAuth } from "@/hooks/use-auth";
 import {
   Box,
   Flex,
-  Text,
   IconButton,
   Button,
   Stack,

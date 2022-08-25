@@ -125,7 +125,7 @@ const File = ({ path, isPublic, isString, lastModified, url }: IFileProps) => {
       <Flex experimental_spaceX={4}>
         <Box>
           <Button
-            leftIcon={<Trash2 />}
+            leftIcon={<Icon as={Trash2} />}
             colorScheme="red"
             bg="red.400"
             size="sm"
@@ -169,7 +169,9 @@ const File = ({ path, isPublic, isString, lastModified, url }: IFileProps) => {
           <Button
             backgroundColor={hasCopiedGaiaUrl ? "green.400" : "cyan.400"}
             colorScheme={hasCopiedGaiaUrl ? "green" : "cyan"}
-            leftIcon={hasCopiedGaiaUrl ? <Check /> : <Copy />}
+            leftIcon={
+              hasCopiedGaiaUrl ? <Icon as={Check} /> : <Icon as={Copy} />
+            }
             size="sm"
             onClick={onCopyGaiaUrl}
           >
@@ -181,7 +183,7 @@ const File = ({ path, isPublic, isString, lastModified, url }: IFileProps) => {
               <Button
                 colorScheme="cyan"
                 backgroundColor="cyan.400"
-                leftIcon={<Copy />}
+                leftIcon={<Icon as={Copy} />}
                 size="sm"
               >
                 Copy Gaia URL
@@ -197,7 +199,9 @@ const File = ({ path, isPublic, isString, lastModified, url }: IFileProps) => {
                   will only be able to see the encrypted content
                 </Text>
                 <Button
-                  leftIcon={hasCopiedGaiaUrl ? <Check /> : <Copy />}
+                  leftIcon={
+                    hasCopiedGaiaUrl ? <Icon as={Check} /> : <Icon as={Copy} />
+                  }
                   size="sm"
                   mt={2}
                   backgroundColor={hasCopiedGaiaUrl ? "green.400" : "cyan.400"}

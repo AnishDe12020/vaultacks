@@ -1,8 +1,8 @@
-import { Button, Center, Flex, Heading, Link, Spacer } from "@chakra-ui/react";
+import { Button, Heading, Link, Icon } from "@chakra-ui/react";
 import type { NextPage } from "next";
-import { useAuth } from "@/hooks/use-auth";
 import Files from "@/components/Files";
 import NextLink from "next/link";
+import { Upload } from "react-feather";
 
 const Home: NextPage = () => {
   return (
@@ -10,9 +10,14 @@ const Home: NextPage = () => {
       <Heading>Files</Heading>
 
       <NextLink href="/upload" passHref>
-        <Button my={8} as={Link}>
+        <Link
+          my={8}
+          as={Button}
+          leftIcon={<Icon as={Upload} />}
+          _hover={{ textDecoration: "none" }}
+        >
           Upload Files
-        </Button>
+        </Link>
       </NextLink>
 
       <Files />

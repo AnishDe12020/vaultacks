@@ -8,7 +8,7 @@ import {
   Code,
   Link,
   Flex,
-  useToast,
+  Icon,
 } from "@chakra-ui/react";
 import { useEffect } from "react";
 import File from "@/components/File";
@@ -33,7 +33,7 @@ const Files = () => {
       {metadata ? (
         <Button
           onClick={async () => await refreshMetadata()}
-          leftIcon={<RefreshCcw />}
+          leftIcon={<Icon as={RefreshCcw} />}
           mb={8}
           isLoading={isMetadataRefreshing}
         >
