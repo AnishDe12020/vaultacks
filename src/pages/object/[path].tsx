@@ -8,8 +8,9 @@ import {
   Icon,
   Text,
   IconButton,
-  useClipboard,
   Button,
+  Badge,
+  useClipboard,
 } from "@chakra-ui/react";
 import { Type, FileText, Copy, Check, Download } from "react-feather";
 import { NextPage } from "next";
@@ -89,6 +90,11 @@ const ObjectPage: NextPage = () => {
             <Heading as="h2" fontSize="2xl">
               {metadata.path}
             </Heading>
+            {metadata.isPublic ? (
+              <Badge colorScheme="green">Public</Badge>
+            ) : (
+              <Badge colorScheme="red">Private</Badge>
+            )}
             {metadata.isString ? (
               text ? (
                 <VStack>

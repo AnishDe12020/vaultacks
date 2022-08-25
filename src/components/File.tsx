@@ -25,6 +25,7 @@ import {
   LinkBox,
   LinkOverlay,
   useClipboard,
+  Badge,
 } from "@chakra-ui/react";
 import { MutableRefObject, useRef } from "react";
 import { format } from "date-fns";
@@ -107,6 +108,11 @@ const File = ({ path, isPublic, isString, lastModified, url }: IFileProps) => {
             {path}
           </LinkOverlay>
         </NextLink>
+        {isPublic ? (
+          <Badge colorScheme="green">Public</Badge>
+        ) : (
+          <Badge colorScheme="red">Private</Badge>
+        )}
       </HStack>
       <Box>
         <Tooltip label={format(new Date(lastModified), "PPPPpppp")}>
