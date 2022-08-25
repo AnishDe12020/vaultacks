@@ -16,6 +16,7 @@ import { Type, FileText, Copy, Check, Download } from "react-feather";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { NextSeo } from "next-seo";
 import useLoading from "@/hooks/use-loading";
 import { IFile } from "@/types/storage";
 
@@ -73,6 +74,7 @@ const ObjectPage: NextPage = () => {
 
   return (
     <>
+      <NextSeo title={`${path} | Vaultacks`} />
       {metadata ? (
         <Box>
           <VStack spacing={4}>

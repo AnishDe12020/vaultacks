@@ -11,9 +11,11 @@ import {
 } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { LogIn } from "react-feather";
+import { DefaultSeo } from "next-seo";
 import { theme } from "../theme";
 import { useAuth } from "@/hooks/use-auth";
 import Header from "@/components/Header";
+import SEO from "../next-seo.config";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const { userSession, setUserData, authenticate, userData } = useAuth();
@@ -31,6 +33,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ChakraProvider theme={theme}>
       <Header />
+      <DefaultSeo {...SEO} />
       <Center mt={8} flexDir="column" px={{ base: 8, md: 16, lg: 32 }}>
         {userData ? (
           <Component {...pageProps} />
