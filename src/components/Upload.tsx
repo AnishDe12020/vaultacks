@@ -231,10 +231,15 @@ const Upload = () => {
 
         <FormControl>
           <FormLabel>Is Public?</FormLabel>
+          <Text fontSize="sm" color="gray.300">
+            If the file is public, it wont be encrypted. Private files are
+            encrypted and only you can decrypt it.
+          </Text>
           <Switch
             id="isPublic"
             isChecked={isPublic}
             onChange={handlePublicChange}
+            mt={4}
           />
         </FormControl>
 
