@@ -7,9 +7,11 @@ import {
   Button,
   Heading,
   Link,
+  Icon,
 } from "@chakra-ui/react";
-import { theme } from "../theme";
 import { useEffect } from "react";
+import { LogIn } from "react-feather";
+import { theme } from "../theme";
 import { useAuth } from "@/hooks/use-auth";
 import Header from "@/components/Header";
 
@@ -56,6 +58,7 @@ function MyApp({ Component, pageProps }: AppProps) {
               bg="blue.600"
               color="white"
               _hover={{ bg: "blue.500" }}
+              leftIcon={<Icon as={LogIn} />}
             >
               Connect Wallet
             </Button>

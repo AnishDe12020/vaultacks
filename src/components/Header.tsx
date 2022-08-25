@@ -12,6 +12,7 @@ import {
 } from "@chakra-ui/react";
 import { Menu, Upload, X } from "react-feather";
 import NextLink from "next/link";
+import { LogIn, LogOut } from "react-feather";
 
 interface NavItem {
   label: string;
@@ -72,13 +73,16 @@ const Header = () => {
         <DesktopNav />
 
         {userData ? (
-          <Button onClick={logout}>Sign Out</Button>
+          <Button onClick={logout} leftIcon={<Icon as={LogOut} />}>
+            Disconnect Wallet
+          </Button>
         ) : (
           <Button
             onClick={authenticate}
             bg="blue.600"
             color="white"
             _hover={{ bg: "blue.500" }}
+            leftIcon={<Icon as={LogIn} />}
           >
             Connect Wallet
           </Button>
