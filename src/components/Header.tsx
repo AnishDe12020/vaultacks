@@ -75,7 +75,14 @@ const Header = () => {
         {userData ? (
           <Button onClick={logout}>Sign Out</Button>
         ) : (
-          <Button onClick={authenticate}>Sign In</Button>
+          <Button
+            onClick={authenticate}
+            bg="blue.600"
+            color="white"
+            _hover={{ bg: "blue.500" }}
+          >
+            Connect Wallet
+          </Button>
         )}
       </Flex>
 
