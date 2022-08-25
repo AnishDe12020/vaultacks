@@ -29,7 +29,7 @@ type DATA_TYPE = "text" | "file";
 
 const Upload = () => {
   const [data, setData] = useState<string>("");
-  const [dataType, setDatatype] = useState<DATA_TYPE>("string");
+  const [dataType, setDatatype] = useState<DATA_TYPE>();
 
   const [filename, setFilename] = useState<string>("");
   const [isPublic, setPublic] = useState<boolean>(false);
