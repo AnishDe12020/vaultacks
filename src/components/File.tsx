@@ -24,10 +24,11 @@ import {
   HStack,
   LinkBox,
   LinkOverlay,
+  useClipboard,
 } from "@chakra-ui/react";
 import { MutableRefObject, useRef } from "react";
 import { format } from "date-fns";
-import { Type, FileText, Share2, Trash2 } from "react-feather";
+import { Type, FileText, Share2, Trash2, Copy, Check } from "react-feather";
 import NextLink from "next/link";
 import useLoading from "@/hooks/use-loading";
 import { useStorage } from "@/hooks/use-storage";
@@ -58,6 +59,9 @@ const File = ({ path, isPublic, isString, lastModified, url }: IFileProps) => {
 
   const deleteDialogCancelRef =
     useRef<HTMLButtonElement>() as MutableRefObject<HTMLButtonElement>;
+
+  const { onCopy: onCopyGaiaUrl, hasCopied: hasCopiedGaiaUrl } =
+    useClipboard(url);
 
   const handleDeleteFile = async (path: string) => {
     startDeleteLoading();
@@ -157,15 +161,13 @@ const File = ({ path, isPublic, isString, lastModified, url }: IFileProps) => {
         </Box>
         {isPublic ? (
           <Button
-            as={Link}
-            href={url}
-            isExternal
-            colorScheme="cyan"
-            backgroundColor="cyan.400"
-            leftIcon={<Share2 />}
+            backgroundColor={hasCopiedGaiaUrl ? "green.400" : "cyan.400"}
+            colorScheme={hasCopiedGaiaUrl ? "green" : "cyan"}
+            leftIcon={hasCopiedGaiaUrl ? <Check /> : <Copy />}
             size="sm"
+            onClick={onCopyGaiaUrl}
           >
-            Share
+            Copy Gaia URL
           </Button>
         ) : (
           <Popover trigger="click">
@@ -173,10 +175,10 @@ const File = ({ path, isPublic, isString, lastModified, url }: IFileProps) => {
               <Button
                 colorScheme="cyan"
                 backgroundColor="cyan.400"
-                leftIcon={<Share2 />}
+                leftIcon={<Copy />}
                 size="sm"
               >
-                Share
+                Copy Gaia URL
               </Button>
             </PopoverTrigger>
             <PopoverContent>
@@ -185,11 +187,18 @@ const File = ({ path, isPublic, isString, lastModified, url }: IFileProps) => {
               <PopoverHeader>Private File</PopoverHeader>
               <PopoverBody>
                 <Text>
-                  This is a private file. You can go to the URL but you will be
-                  only able to see the encrypted content
+                  This is a private file. You can go to the Gaia URL but you
+                  will only be able to see the encrypted content
                 </Text>
-                <Button as={Link} isExternal size="sm" href={url} mt={2}>
-                  Go to private URL
+                <Button
+                  leftIcon={hasCopiedGaiaUrl ? <Check /> : <Copy />}
+                  size="sm"
+                  mt={2}
+                  backgroundColor={hasCopiedGaiaUrl ? "green.400" : "cyan.400"}
+                  colorScheme={hasCopiedGaiaUrl ? "green" : "cyan"}
+                  onClick={onCopyGaiaUrl}
+                >
+                  Copy private Gaia URL
                 </Button>
               </PopoverBody>
             </PopoverContent>
