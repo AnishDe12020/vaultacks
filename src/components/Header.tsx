@@ -11,7 +11,7 @@ import {
   useDisclosure,
   Icon,
 } from "@chakra-ui/react";
-import { Menu, X } from "react-feather";
+import { Menu, Upload, X } from "react-feather";
 import NextLink from "next/link";
 
 interface NavItem {
@@ -99,13 +99,11 @@ const DesktopNav = () => {
       {NAV_ITEMS.map(navItem => (
         <NextLink key={navItem.label} href={navItem.href ?? "#"} passHref>
           <Link
-            p={2}
-            fontSize={"lg"}
+            as={Button}
+            leftIcon={<Icon as={Upload} />}
             fontWeight="semibold"
             color="gray.100"
-            _hover={{
-              color: "gray.300",
-            }}
+            _hover={{ textDecoration: "none" }}
           >
             {navItem.label}
           </Link>
