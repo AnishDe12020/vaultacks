@@ -86,13 +86,21 @@ export const useStorage = () => {
     return url;
   };
 
-  const getFile = async (filename: string) => {
+  const getFileWithMeta = async (filename: string) => {
     const fileMeta = await getFileMetadata(filename);
     const res = await storage.getFile(filename, {
       decrypt: !fileMeta.isPublic,
     });
 
     return { meta: fileMeta, data: res };
+  };
+
+  const getFile = async (filename: string, doDecrypt: boolean = true) => {
+    const res = await storage.getFile(filename, {
+      decrypt: doDecrypt,
+    });
+
+    return res;
   };
 
   const getMetadataFile = async () => {
@@ -153,6 +161,7 @@ export const useStorage = () => {
     storage,
     saveFile,
     getFile,
+    getFileWithMeta,
     getMetadataFile,
     getFileMetadata,
     saveMetadataFile,

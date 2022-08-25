@@ -4,7 +4,7 @@ import type { NextPage } from "next";
 import { useState } from "react";
 
 const PlaygroundPage: NextPage = () => {
-  const { saveFile, getFile, storage, deleteAllFiles } = useStorage();
+  const { saveFile, getFileWithMeta, storage, deleteAllFiles } = useStorage();
 
   const [filename, setFilename] = useState<string | null>(null);
 
@@ -62,7 +62,7 @@ const PlaygroundPage: NextPage = () => {
       <form
         onSubmit={async e => {
           e.preventDefault();
-          console.log(await getFile(filename as string));
+          console.log(await getFileWithMeta(filename as string));
         }}
       >
         <Flex direction="row" experimental_spaceX={4}>
