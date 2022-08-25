@@ -10,7 +10,7 @@ const Footer = () => (
     </Text>
 
     <Text>
-      The code for this is open-source,{" "}
+      The code for this is available on GitHub,{" "}
       <Link
         href="https://github.com/AnishDe12020/vaultacks"
         isExternal
