@@ -17,6 +17,7 @@ import { useAuth } from "@/hooks/use-auth";
 import Header from "@/components/Header";
 import SEO from "../../next-seo.config";
 import Logo from "@/components/Logo";
+import Footer from "@/components/Footer";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const { userSession, setUserData, authenticate, userData } = useAuth();
@@ -70,6 +71,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           </>
         )}
       </Center>
+      <Footer />
     </ChakraProvider>
   );
 }
