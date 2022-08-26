@@ -4,5 +4,5 @@ export const appConfig = new AppConfig(["store_write", "publish_data"]);
 
 export const appDetails: AuthOptions["appDetails"] = {
   name: "Vaultacks",
-  icon: "/vercel.svg",
+  icon: "https://vaultacks.vercel.app/favicons/apple-icon.png",
 };
