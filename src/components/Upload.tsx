@@ -23,6 +23,7 @@ import {
 import { useCallback, useState } from "react";
 import { useDropzone, FileRejection } from "react-dropzone";
 import { FilePlus, Upload as UploadIcon } from "react-feather";
+import NextLink from "next/link";
 
 const MAX_FILE_SIZE = 15728640; // 20971520 is the max file size set by the default blockstack gaia hub. However, encryption increases the file size to almost 20MB (for a 15MB file).
 
@@ -127,9 +128,9 @@ const Upload = () => {
       toast({
         title: "File uploaded",
         description: (
-          <Link href={url} isExternal color="cyan.900" fontWeight="bold">
-            {url}
-          </Link>
+          <NextLink href={`/object/${filename}`} passHref>
+            <Link>View file</Link>
+          </NextLink>
         ),
         status: "success",
       });
