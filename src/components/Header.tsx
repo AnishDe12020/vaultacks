@@ -99,7 +99,12 @@ const Header = () => {
 
 const DesktopNav = () => {
   return (
-    <Stack direction={"row"} spacing={4} display={{ base: "none", md: "flex" }}>
+    <Stack
+      direction={"row"}
+      spacing={4}
+      display={{ base: "none", md: "flex" }}
+      mr={-24}
+    >
       {NAV_ITEMS.map(navItem => (
         <NextLink key={navItem.label} href={navItem.href ?? "#"} passHref>
           <Link
