@@ -13,12 +13,25 @@ Users can wish to make files private or public. Public files are stored as-is an
 
 ## Screenshots
 - Home page (displays files when wallet is connected)
+
 ![image](https://user-images.githubusercontent.com/63192115/186873261-f7b84323-fc70-4d39-a64c-55880aeda0b2.png)
+
+---
+
 - File Upload Page (here 1 file is uploaded and it is made public)
+
 ![image](https://user-images.githubusercontent.com/63192115/186873409-2ddd498c-7ecf-4de8-8aa8-419764044724.png)
+
+---
+
 - File page for text
+
 ![image](https://user-images.githubusercontent.com/63192115/186873484-60d5464a-7682-4e96-bca5-157b7e30b155.png)
+
+---
+
 - File page for files
+
 ![image](https://user-images.githubusercontent.com/63192115/186873550-58a33d4d-8cc9-4eb3-b7d6-9af26784c37e.png)
 
 ## Author
